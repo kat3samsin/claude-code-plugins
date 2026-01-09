@@ -1,0 +1,30 @@
+{
+  "name": "kat3samsin-claude-code-plugins",
+  "owner": {
+    "name": "Katrina Tantay",
+    "url": "https://github.com/kat3samsin"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for productivity and accessibility",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "claudio",
+      "source": "./plugins/claudio",
+      "description": "Talk to Claude Code. Voice in, voice out. Claude announces what it's doing while you work on other things.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Katrina Tantay"
+      },
+      "repository": "https://github.com/kat3samsin/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["tts", "voice", "audio", "accessibility", "speech", "text-to-speech", "macos"],
+      "category": "accessibility",
+      "strict": true,
+      "skills": [
+        "./skills/setup-claudio"
+      ]
+    }
+  ]
+}
