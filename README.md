@@ -33,14 +33,6 @@ Claude runs in the background and tells you what it's doing while you work on ot
 - `jq` for configuration (`brew install jq`)
 - Optional: Premium system voices
 
-```bash
-# Install Claudio
-/plugin install claudio@kat3samsin-claude-code-plugins
-
-# Run setup
-/setup-claudio
-```
-
 ## Install the Marketplace
 
 Add this marketplace to Claude Code:
@@ -50,6 +42,17 @@ Add this marketplace to Claude Code:
 ```
 
 This makes all plugins available for installation.
+
+Install Claudio:
+
+```bash
+# Install Claudio
+/plugin install claudio@kat3samsin-claude-code-plugins
+
+Run the setup skill to configure:
+# Run setup
+/setup-claudio
+```
 
 ## License
 
