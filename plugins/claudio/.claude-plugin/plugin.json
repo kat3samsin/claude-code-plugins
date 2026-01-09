@@ -1,0 +1,9 @@
+{
+  "name": "claudio",
+  "version": "1.0.0",
+  "description": "Talk to Claude Code. Voice in, voice out. Claude announces what it's doing while you work.",
+  "author": {
+    "name": "Katrina Tantay"
+  },
+  "license": "MIT"
+}
