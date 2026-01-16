@@ -1,0 +1,9 @@
+{
+  "name": "refocus",
+  "version": "1.0.0",
+  "description": "Refocus on your terminal when Claude Code tasks complete. Clickable notifications bring you right back.",
+  "author": {
+    "name": "Katrina Tantay"
+  },
+  "license": "MIT"
+}

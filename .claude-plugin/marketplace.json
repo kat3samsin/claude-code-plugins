@@ -25,6 +25,23 @@
       "skills": [
         "./skills/setup-claudio"
       ]
+    },
+    {
+      "name": "refocus",
+      "source": "./plugins/refocus",
+      "description": "Refocus on your terminal when Claude Code tasks complete. Clickable notifications bring you right back.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Katrina Tantay"
+      },
+      "repository": "https://github.com/kat3samsin/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["notifications", "macos", "terminal", "productivity", "focus"],
+      "category": "productivity",
+      "strict": true,
+      "skills": [
+        "./skills/setup-refocus"
+      ]
     }
   ]
 }
