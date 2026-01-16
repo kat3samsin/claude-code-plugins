@@ -51,7 +51,7 @@ Install Claudio:
 
 Run the setup skill to configure:
 # Run setup
-/setup-claudio
+/claudio:setup-claudio
 ```
 
 ## License

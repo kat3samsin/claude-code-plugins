@@ -264,16 +264,17 @@ if [ -f "$SETTINGS_FILE" ]; then
         HOOKS_CONFIG=$(cat << JSONEOF
 {
   "PermissionRequest": [{"matcher": "", "hooks": [{"type": "command", "command": "~/.claude/hooks/permission-tts.sh"}]}],
-  "Notification": [{"matcher": "", "hooks": [{"type": "command", "command": "say -r 180 -v \"${VOICE}\" \"I have a question for you...\" && osascript -e 'display notification \"I need your input\" with title \"Claude Code\" sound name \"Purr\"'"}]}],
-  "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "say -r 180 -v \"${VOICE}\" \"Task complete! What do you want to do next?\" && osascript -e 'display notification \"Task complete!\" with title \"Claude Code\" sound name \"Hero\"'"}]}]
+  "Notification": [{"matcher": "", "hooks": [{"type": "command", "command": "say -r 180 -v \"${VOICE}\" \"I have a question for you...\""}]}],
+  "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "say -r 180 -v \"${VOICE}\" \"Task complete! What do you want to do next?\""}]}]
 }
 JSONEOF
 )
-        # Update settings
+        # Update settings with hooks, output style, and auto-approve say command
         jq --arg style "$STYLE_NAME" --argjson hooks "$HOOKS_CONFIG" \
-           '.outputStyle = $style | .hooks = $hooks' \
+           '.outputStyle = $style | .hooks = $hooks | .permissions.allow = ((.permissions.allow // []) + ["Bash(say:*)"] | unique)' \
            "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
         echo -e "${GREEN}✓ Settings updated${NC}"
+        echo -e "${GREEN}✓ Auto-approved: say command${NC}"
     else
         echo -e "${YELLOW}⚠ jq not found. Please install: brew install jq${NC}"
         echo "Then manually add to $SETTINGS_FILE:"
