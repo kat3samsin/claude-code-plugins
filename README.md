@@ -33,6 +33,39 @@ Claude runs in the background and tells you what it's doing while you work on ot
 - `jq` for configuration (`brew install jq`)
 - Optional: Premium system voices
 
+## refocus
+
+Refocus on your terminal when Claude Code tasks complete. Clickable notifications bring you right back.
+
+**What's included:**
+
+- **setup-refocus skill** - Configure clickable notifications for task completion
+
+**Features:**
+
+- Notification on task completion - Know when Claude is done
+- Click to refocus - Activate your terminal window instantly
+- Smart messages - Different notifications for different completion types
+- Customizable sounds - Choose your notification sound
+
+**Use cases:**
+
+- Background task monitoring while working in other apps
+- Never miss when Claude finishes a long-running task
+- Quick context switching back to your terminal
+
+**Requirements:**
+
+- macOS
+- `terminal-notifier` (`brew install terminal-notifier`)
+- `jq` for configuration (`brew install jq`)
+
+**Supported Terminals:**
+
+- iTerm2
+- Ghostty
+- Terminal.app
+
 ## Install the Marketplace
 
 Add this marketplace to Claude Code:
@@ -43,15 +76,16 @@ Add this marketplace to Claude Code:
 
 This makes all plugins available for installation.
 
-Install Claudio:
+Install plugins:
 
 ```bash
-# Install Claudio
+# Install Claudio (voice output)
 /plugin install claudio@kat3samsin-claude-code-plugins
-
-Run the setup skill to configure:
-# Run setup
 /claudio:setup-claudio
+
+# Install Refocus (clickable notifications)
+/plugin install refocus@kat3samsin-claude-code-plugins
+/refocus:setup-refocus
 ```
 
 ## License
