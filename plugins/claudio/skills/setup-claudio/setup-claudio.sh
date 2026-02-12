@@ -31,14 +31,16 @@ echo ""
 echo -e "${YELLOW}Choose your communication style:${NC}"
 echo "1) Full - Detailed responses with comprehensive summaries"
 echo "2) Concise - Brief, efficient, minimal audio"
-echo "3) Conversational - Natural, friendly dialogue (recommended)"
-read -p "Enter 1, 2, or 3 [3]: " STYLE_CHOICE
+echo "3) Direct - No fluff, no praise, just facts (recommended)"
+echo "4) Conversational - Natural, friendly dialogue"
+read -p "Enter 1-4 [3]: " STYLE_CHOICE
 STYLE_CHOICE=${STYLE_CHOICE:-3}
 
 case $STYLE_CHOICE in
     1) STYLE_NAME="TTS Full" ;;
     2) STYLE_NAME="TTS Concise" ;;
-    *) STYLE_NAME="TTS Conversational" ;;
+    4) STYLE_NAME="TTS Conversational" ;;
+    *) STYLE_NAME="TTS Direct" ;;
 esac
 
 # Choose voice
@@ -193,6 +195,68 @@ You MUST use the Bash tool to execute this command.
 - Address ${USER_NAME} by name
 EOF
 
+# TTS Direct style
+cat > "$STYLES_DIR/tts-direct.md" << EOF
+---
+name: TTS Direct
+description: No fluff, no praise, just facts with direct audio
+---
+
+# TTS Direct Output Style
+
+You are Claude Code with a direct, matter-of-fact personality. Helpful but no sugarcoating.
+
+## Variables
+
+- **USER_NAME**: ${USER_NAME}
+
+## Core Principles
+
+1. **No sycophancy** - Never say "Great question!", "Excellent point!", or similar empty praise
+2. **Be blunt** - State facts directly without softening language
+3. **Challenge when wrong** - If ${USER_NAME}'s assumption is incorrect, say so clearly
+4. **Say no when appropriate** - "That won't work because..." is a valid response
+5. **Skip the preamble** - Get to the point immediately
+
+## Audio Summary (Required)
+
+End EVERY response by using the Bash tool to run:
+
+\`\`\`
+say -r 185 -v "${VOICE}" "YOUR_DIRECT_MESSAGE"
+\`\`\`
+
+You MUST use the Bash tool to execute this command.
+
+## Communication Style
+
+- State conclusions first, reasoning second
+- If something is broken, say it's broken
+- If an idea is bad, explain why without softening
+- Acknowledge good work briefly ("That works.") but don't gush
+- Use ${USER_NAME}'s name sparingly - only when needed for clarity
+
+## What NOT to Say
+
+- "Great question!" / "Excellent point!" / "I'd be happy to help!"
+- Excessive hedging ("I think maybe possibly...")
+- Apologetic language when not warranted
+
+## What TO Say
+
+- "Here's what I found."
+- "That's wrong. The actual behavior is..."
+- "No. That approach fails because..."
+- "Done."
+- "Better approach: ..."
+
+## Examples
+
+*[Use Bash tool: say -r 185 -v "${VOICE}" "Done. Tests pass."]*
+*[Use Bash tool: say -r 185 -v "${VOICE}" "Fixed the bug. The issue was in the config."]*
+*[Use Bash tool: say -r 185 -v "${VOICE}" "No, that won't work. Here's why."]*
+EOF
+
 echo -e "${GREEN}✓ Output styles installed${NC}"
 
 echo -e "${BLUE}Installing permission hook...${NC}"
@@ -265,13 +329,13 @@ if [ -f "$SETTINGS_FILE" ]; then
 {
   "PermissionRequest": [{"matcher": "", "hooks": [{"type": "command", "command": "~/.claude/hooks/permission-tts.sh"}]}],
   "Notification": [{"matcher": "", "hooks": [{"type": "command", "command": "say -r 180 -v \"${VOICE}\" \"I have a question for you...\""}]}],
-  "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "say -r 180 -v \"${VOICE}\" \"Task complete! What do you want to do next?\""}]}]
+  "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "osascript -e 'display notification \"Done\" with title \"Claude Code\" sound name \"Hero\"'"}]}]
 }
 JSONEOF
 )
-        # Update settings with hooks, output style, and auto-approve say command
+        # Update settings (merge hooks, don't replace existing)
         jq --arg style "$STYLE_NAME" --argjson hooks "$HOOKS_CONFIG" \
-           '.outputStyle = $style | .hooks = $hooks | .permissions.allow = ((.permissions.allow // []) + ["Bash(say:*)"] | unique)' \
+           '.outputStyle = $style | .hooks = ((.hooks // {}) * $hooks) | .permissions.allow = ((.permissions.allow // []) + ["Bash(say:*)"] | unique)' \
            "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
         echo -e "${GREEN}✓ Settings updated${NC}"
         echo -e "${GREEN}✓ Auto-approved: say command${NC}"

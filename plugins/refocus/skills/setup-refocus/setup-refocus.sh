@@ -163,9 +163,9 @@ if [ -f "$SETTINGS_FILE" ]; then
 [{"matcher": "", "hooks": [{"type": "command", "command": "~/.claude/hooks/refocus-handler.sh"}]}]
 JSONEOF
 )
-        # Update settings - add or replace Stop hook
+        # Merge Stop hook with existing hooks (don't replace other hook types)
         jq --argjson stopHook "$STOP_HOOK" \
-           '.hooks.Stop = $stopHook | .permissions.allow = ((.permissions.allow // []) + ["Bash(terminal-notifier:*)"] | unique)' \
+           '.hooks.Stop = ((.hooks.Stop // []) + $stopHook | unique) | .permissions.allow = ((.permissions.allow // []) + ["Bash(terminal-notifier:*)"] | unique)' \
            "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
         echo -e "${GREEN}✓ Settings updated${NC}"
         echo -e "${GREEN}✓ Auto-approved: terminal-notifier command${NC}"

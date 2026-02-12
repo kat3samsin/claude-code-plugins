@@ -9,7 +9,7 @@ This skill sets up an enhanced Claude Code experience with voice output:
 
 - **Audio announcements** for task completions, permission requests, and questions
 - **Smart permission announcements** that tell you exactly what's being requested
-- **Three output styles**: Full, Concise, and Conversational
+- **Four output styles**: Full, Concise, Direct, and Conversational
 - **Personalized** with your name
 
 ## How to Run
@@ -25,6 +25,7 @@ Users can trigger this skill by:
 2. Lets you choose your preferred style:
    - **Full**: Detailed responses with comprehensive audio summaries
    - **Concise**: Brief, efficient responses with short audio
+   - **Direct**: No fluff, no praise, just facts (recommended)
    - **Conversational**: Natural, friendly dialogue with warm audio
 3. Installs output styles to `~/.claude/output-styles/`
 4. Installs TTS hooks for:
@@ -44,7 +45,7 @@ Switch styles anytime by editing `~/.claude/settings.json`:
 }
 ```
 
-Options: `"TTS Full"`, `"TTS Concise"`, `"TTS Conversational"`
+Options: `"TTS Full"`, `"TTS Concise"`, `"TTS Direct"`, `"TTS Conversational"`
 
 ## Requirements
 
